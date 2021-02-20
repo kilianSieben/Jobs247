@@ -1,6 +1,6 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
+using Jobs247.Views;
+
 
 namespace Jobs247
 {
@@ -10,7 +10,7 @@ namespace Jobs247
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage (new WelcomePage ());
         }
 
         protected override void OnStart()
