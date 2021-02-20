@@ -16,5 +16,10 @@ namespace Jobs247.Views
         {
             InitializeComponent();
         }
+
+        private async void OnFindNewJobClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new JobFilterPage());
+        }
     }
 }

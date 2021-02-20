@@ -6,12 +6,20 @@
         <ResourceDictionary>
             <Style x:Key="buttonStyle" TargetType="Button">
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="EndAndExpand" />
-                <Setter Property="BorderRadius" Value="2" />
-                <Setter Property="BorderWidth" Value="2" />
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+                <Setter Property="Padding" Value="5,5,5,5"/>
+                <Setter Property="BorderRadius" Value="2"/>
+                <Setter Property="BorderWidth" Value="2"/>
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="BorderColor" Value="Black"/>
             </Style>
+            <Style x:Key="pickerFilterStyle" TargetType="Picker">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Padding" Value="5,5,5,5"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="BorderColor" Value="Black"/>
+            </Style>
+            
         </ResourceDictionary>
 
     </Application.Resources>

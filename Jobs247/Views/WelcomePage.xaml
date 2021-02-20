@@ -8,7 +8,7 @@
         <StackLayout Padding="20,20,20,50">
             <Label Text="Welcome to the 24/7 job portal. Find your dream job here!" 
                 HorizontalTextAlignment="Start"/>
-            <Button Text="Find your new Job!" Style="{StaticResource buttonStyle}" AnchorX="200" AnchorY="200"/>
+            <Button Text="Find your new Job!" Style="{StaticResource buttonStyle}" Clicked="OnFindNewJobClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
