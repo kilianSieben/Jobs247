@@ -14,10 +14,8 @@
                 <Setter Property="BorderColor" Value="Black"/>
             </Style>
             <Style x:Key="pickerFilterStyle" TargetType="Picker">
-                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-                <Setter Property="Padding" Value="5,5,5,5"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
                 <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="BorderColor" Value="Black"/>
             </Style>
             
         </ResourceDictionary>

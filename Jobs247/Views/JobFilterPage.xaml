@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Jobs247.Views.JobFilterPage">
+             xmlns:local="clr-namespace:Jobs247;assembly=Jobs247"
+             x:Class="Jobs247.Views.JobFilterPage"
+             Title="{x:Static local:Constants.HeaderTitle}">
     <ContentPage.Content>
         <StackLayout Padding="20,20,20,50">
             <Grid>
@@ -27,7 +29,7 @@
             
             
             
-            <Button Text="Show the matches!" Style="{StaticResource buttonStyle}" Clicked="OnShowMatches"/>
+            <Button Text="Show the matches!" Style="{StaticResource buttonStyle}" Clicked="OnShowMatchesClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

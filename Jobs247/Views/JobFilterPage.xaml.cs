@@ -25,11 +25,12 @@ namespace Jobs247.Views
         public JobFilterPage()
         {
             InitializeComponent();
+            Title = "";
         }
 
-        private async void OnShowMatches(object sender, EventArgs e)
+        private async void OnShowMatchesClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new JobFilterPage());
+            await Navigation.PushAsync(new ShowMatchesPage());
         }
     }
 }
