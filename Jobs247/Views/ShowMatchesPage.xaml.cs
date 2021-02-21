@@ -20,10 +20,10 @@ namespace Jobs247.Views
             InitializeComponent();
 
             MatchingJobs = new ObservableCollection<Job>();
-            MatchingJobs.Add(new Job { JobTitle = "Software Developer" });
-            MatchingJobs.Add(new Job { JobTitle = "Support" });
-            MatchingJobs.Add(new Job { JobTitle = "App Developer" });
-            MatchingJobs.Add(new Job { JobTitle = "Actor" });
+            //MatchingJobs.Add(new Job { JobTitle = "Software Developer" });
+            //MatchingJobs.Add(new Job { JobTitle = "Support" });
+            //MatchingJobs.Add(new Job { JobTitle = "App Developer" });
+            //MatchingJobs.Add(new Job { JobTitle = "Actor" });
 
             MatchingJobsListView.ItemsSource = MatchingJobs;
 

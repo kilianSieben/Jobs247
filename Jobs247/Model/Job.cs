@@ -6,11 +6,9 @@ namespace Jobs247.Model
 {
     public class Job
     {
-        private string jobTitle;
-        public string JobTitle
-        {
-            get { return jobTitle; }
-            set { jobTitle = value; }
-        }
+        public int JobId { get; set; }
+        public Position Position { get; set; }
+        public Company Company { get; set; }
+        public string Description { get; set; }
     }
 }

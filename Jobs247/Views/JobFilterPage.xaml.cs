@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Jobs247.Model;
+using Jobs247.Utility;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,11 +23,23 @@ namespace Jobs247.Views
                 OnPropertyChanged(nameof(MatchingJobString));
             }
         }
+
+        public List<Job> MatchingJobs { get; set; }
+        public RestService RestService { get; set; }
+
         public JobFilterPage()
         {
             InitializeComponent();
-            Title = "";
+            RestService = new RestService();
+            MatchingJobs = new List<Job>();
         }
+
+        protected async override void OnAppearing()
+        {
+            
+            MatchingJobs = await RestService.GetJobPostings();
+        }
+
 
         private async void OnShowMatchesClicked(object sender, EventArgs e)
         {
