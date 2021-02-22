@@ -9,16 +9,15 @@ namespace Jobs247.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShowMatchesPage : ContentPage
     {
-        public List<Job> MatchingJobsListViewItems { get; set; }
+        public ObservableCollection<Job> MatchingJobsListViewItems { get; set; }
 
         public ShowMatchesPage(List<Job> MatchingJobs)
         {
             InitializeComponent();
 
-            MatchingJobsListViewItems = new List<Job>();
-            MatchingJobsListViewItems = MatchingJobs;
+            MatchingJobsListViewItems = new ObservableCollection<Job>(MatchingJobs);
 
-            MatchingJobsListView.ItemsSource = MatchingJobs;
+            MatchingJobsListView.ItemsSource = MatchingJobsListViewItems;
 
         }
 

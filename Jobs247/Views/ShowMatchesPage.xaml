@@ -5,10 +5,15 @@
              x:Class="Jobs247.Views.ShowMatchesPage"
              Title="{x:Static local:Constants.HeaderTitle}">
     <ContentPage.Content>
-        <ListView x:Name="MatchingJobsListView" ItemSelected="OnMatchingJobsItemClicked">
+        <ListView x:Name="MatchingJobsListView" Margin="5,0,5,0" ItemSelected="OnMatchingJobsItemClicked">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding JobTitle}"/>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Position.name}"/>
+                            <Label Text="{Binding Description}"/>
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
