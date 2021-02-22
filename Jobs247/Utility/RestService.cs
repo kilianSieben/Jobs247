@@ -11,11 +11,13 @@ namespace Jobs247.Utility
 {
     public class RestService
     {
-        HttpClient client;
+        HttpClient client { get; set; }
+        List<Job> Jobs { get; set; }
 
         public RestService()
         {
             client = new HttpClient();
+            Jobs = new List<Job>();
         }
 
         public async Task<List<Job>> GetJobPostings()
@@ -51,7 +53,6 @@ namespace Jobs247.Utility
                 positionItems = JsonConvert.DeserializeObject<List<Position>>(content);
             }
 
-            List<Job> Jobs = null;
 
             if(jobItems != null && companyItems != null && positionItems != null)
             {

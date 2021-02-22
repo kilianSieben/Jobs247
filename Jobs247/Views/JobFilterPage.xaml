@@ -13,10 +13,10 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <StackLayout Grid.Column="1">
-                    <Picker Title="Job-Title" Style="{StaticResource pickerFilterStyle}"/>
-                    <Picker Title="Company" Style="{StaticResource pickerFilterStyle}"/>
-                    <SearchBar Placeholder="Free Text Search"/>
-                    <Label Text="{Binding MatchingJobString}" Margin="0,30,0,0"/>
+                    <Picker x:Name="JobTitlePicker" Title="Job-Title" Style="{StaticResource pickerFilterStyle}"/>
+                    <Picker x:Name="CompanyNamePicker" Title="Company" Style="{StaticResource pickerFilterStyle}"/>
+                    <SearchBar x:Name="SearchBar" Placeholder="Free Text Search" TextChanged="SearchBarTextChanged"/>
+                    <Label x:Name="MatchingJobsFound" Margin="0,30,0,0"/>
                 </StackLayout>
                 
                 
