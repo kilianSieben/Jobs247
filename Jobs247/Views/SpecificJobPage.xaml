@@ -5,10 +5,11 @@
              x:Class="Jobs247.Views.SpecificJobPage"
              Title="{x:Static local:Constants.HeaderTitle}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Position:" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Label Text="Company:" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Label Text="Description:" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="50,50,50,30">
+            <Label x:Name="PositionLabel" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+            <Label x:Name="CompanyLabel" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+            <Label x:Name="DescriptionLabel" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+            <Button Text="Apply" Style="{StaticResource buttonStyle}" Clicked="OnApplyClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

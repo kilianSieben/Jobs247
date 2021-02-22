@@ -18,17 +18,7 @@
                     <SearchBar x:Name="SearchBar" Placeholder="Free Text Search" TextChanged="SearchBarTextChanged"/>
                     <Label x:Name="MatchingJobsFound" Margin="0,30,0,0"/>
                 </StackLayout>
-                
-                
-
-
             </Grid>
-            
-            
-            
-            
-            
-            
             <Button Text="Show the matches!" Style="{StaticResource buttonStyle}" Clicked="OnShowMatchesClicked"/>
         </StackLayout>
     </ContentPage.Content>

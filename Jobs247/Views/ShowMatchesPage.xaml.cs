@@ -23,7 +23,7 @@ namespace Jobs247.Views
 
         private async void OnMatchingJobsItemClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushAsync(new SpecificJobPage());
+            await Navigation.PushAsync(new SpecificJobPage(e.SelectedItem as Job));
         }
 
     }
