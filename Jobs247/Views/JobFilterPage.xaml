@@ -15,11 +15,11 @@
                 <StackLayout Grid.Column="1">
                     <Picker x:Name="JobTitlePicker" Title="Job-Title" Style="{StaticResource pickerFilterStyle}"/>
                     <Picker x:Name="CompanyNamePicker" Title="Company" Style="{StaticResource pickerFilterStyle}"/>
-                    <SearchBar x:Name="SearchBar" Placeholder="Free Text Search" TextChanged="SearchBarTextChanged"/>
+                    <SearchBar x:Name="SearchBar" Placeholder="Free Text Search" SearchButtonPressed="SearchBarTextChanged"/>
                     <Label x:Name="MatchingJobsFound" Margin="0,30,0,0"/>
                 </StackLayout>
             </Grid>
-            <Button Text="Show the matches!" Style="{StaticResource buttonStyle}" Clicked="OnShowMatchesClicked"/>
+            <Button x:Name="ShowMatchesButton" Text="Show the matches!" Style="{StaticResource buttonStyle}" Clicked="OnShowMatchesClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

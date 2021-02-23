@@ -14,41 +14,11 @@ namespace Jobs247.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class JobFilterPage : ContentPage
     {
-        private string matchingJobString;
-        public string MatchingJobString
-        {
-            get { return matchingJobString; }
-            set
-            {
-                matchingJobString = value;
-                OnPropertyChanged(nameof(MatchingJobString));
-            }
-        }
-
-        private List<string> jobTitleList;
-        public List<string> JobTitleList
-        {
-            get { return jobTitleList; }
-            set
-            {
-                jobTitleList = value;
-                OnPropertyChanged(nameof(JobTitleList));
-            }
-        }
-
-        private List<string> companyNameList;
-        public List<string> CompanyNameList
-        {
-            get { return companyNameList; }
-            set
-            {
-                companyNameList = value;
-                OnPropertyChanged(nameof(CompanyNameList));
-            }
-        }
+        public string MatchingJobString { get; set; }
+        public List<string> JobTitleList { get; set; }
+        public List<string> CompanyNameList { get; set; }
         public List<Job> JobList { get; set; }
         public RestService RestService { get; set; }
-
         public List<Job> MatchingJobs { get; set; }
  
 
@@ -66,6 +36,7 @@ namespace Jobs247.Views
 
         protected async override void OnAppearing()
         {
+            JobList.Clear();
             JobList = await RestService.GetJobPostings();
             foreach(var item in JobList)
             {
@@ -77,8 +48,7 @@ namespace Jobs247.Views
             JobTitlePicker.ItemsSource = JobTitleList;
             CompanyNamePicker.ItemsSource = CompanyNameList;
 
-            string MatchingJobsFoundCount = JobList.Count().ToString();
-            MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
+            ChangeMatchingJobsLabel();
         }
 
 
@@ -87,21 +57,20 @@ namespace Jobs247.Views
             await Navigation.PushAsync(new ShowMatchesPage(MatchingJobs));
         }
 
-        private void SearchBarTextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBarTextChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine(SearchBar.Text);
+            ChangeMatchingJobsLabel();
         }
-        public void MyPickerSelectedIndexChanged(object sender, EventArgs e)
+        private void MyPickerSelectedIndexChanged(object sender, EventArgs e)
         {
             ChangeMatchingJobsLabel();
         }
 
-        public void ChangeMatchingJobsLabel()
+        private void ChangeMatchingJobsLabel()
         {
             MatchingJobs.Clear();
-            Debug.WriteLine(CompanyNamePicker.SelectedIndex);
-            Debug.WriteLine(JobTitlePicker.SelectedIndex);
-            if (JobTitlePicker.SelectedIndex == -1)
+            string MatchingJobsFoundCount = JobList.Count().ToString();
+            if (JobTitlePicker.SelectedIndex == -1 && CompanyNamePicker.SelectedIndex != -1)
             {
                 foreach(var item in JobList)
                 {
@@ -110,8 +79,9 @@ namespace Jobs247.Views
                         MatchingJobs.Add(item);
                     }
                 }
+                MatchingJobsFoundCount = MatchingJobs.Count().ToString();
             }
-            else if (CompanyNamePicker.SelectedIndex == -1)
+            else if (CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex != -1)
             {
                 foreach (var item in JobList)
                 {
@@ -120,8 +90,9 @@ namespace Jobs247.Views
                         MatchingJobs.Add(item);
                     }
                 }
+                MatchingJobsFoundCount = MatchingJobs.Count().ToString();
             }
-            else
+            else if (CompanyNamePicker.SelectedIndex != -1 && JobTitlePicker.SelectedIndex != -1)
             {
                 foreach (var item in JobList)
                 {
@@ -130,10 +101,58 @@ namespace Jobs247.Views
                         MatchingJobs.Add(item);
                     }
                 }
+                MatchingJobsFoundCount = MatchingJobs.Count().ToString();
+            }
+            if (SearchBar.Text != null)
+            {
+                if(CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex == -1)
+                {
+                    foreach (var item in JobList)
+                    {
+                        if (item.Company.name.Contains(SearchBar.Text)) MatchingJobs.Add(item);
+                        else if (item.Position.name.Contains(SearchBar.Text)) MatchingJobs.Add(item);
+                        else if (item.Description.Contains(SearchBar.Text)) MatchingJobs.Add(item);
+                    }
+                    MatchingJobsFoundCount = MatchingJobs.Count().ToString();
+                }
+                else
+                {
+                    var tempMatchingJobs = new ObservableCollection<Job>(MatchingJobs);
+                    foreach (var item in tempMatchingJobs)
+                    {
+                        if (item.Company.name.Contains(SearchBar.Text) == false && 
+                            item.Position.name.Contains(SearchBar.Text) == false && 
+                            item.Description.Contains(SearchBar.Text) == false)
+                        {
+                            MatchingJobs.Remove(item);
+                        }
+                    }
+                    MatchingJobsFoundCount = MatchingJobs.Count().ToString();
+                }
+                
+            }
+            else if (SearchBar.Text == null && CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex == -1)
+            {
+                foreach(var item in JobList)
+                {
+                    MatchingJobs.Add(item);
+                }
+            }
+            if (MatchingJobsFoundCount != "0")
+            {
+                MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
+                ShowMatchesButton.IsVisible = true;
+
+            }
+            else
+            {
+                MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
+                ShowMatchesButton.IsVisible = false;
             }
 
-            string MatchingJobsFoundCount = MatchingJobs.Count().ToString();
-            MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
+            
         }
+
+        
     }
 }
