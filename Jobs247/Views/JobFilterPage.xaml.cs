@@ -3,9 +3,7 @@ using Jobs247.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,18 +16,19 @@ namespace Jobs247.Views
         public List<string> JobTitleList { get; set; }
         public List<string> CompanyNameList { get; set; }
         public List<Job> JobList { get; set; }
-        public RestService RestService { get; set; }
         public List<Job> MatchingJobs { get; set; }
- 
-
+        public RestService RestService { get; set; }
+        
         public JobFilterPage()
         {
             InitializeComponent();
-            RestService = new RestService();
-            JobList = new List<Job>();
+
             JobTitleList = new List<string>();
             CompanyNameList = new List<string>();
+            JobList = new List<Job>();
             MatchingJobs = new List<Job>();
+            RestService = new RestService();
+ 
             JobTitlePicker.SelectedIndexChanged += this.MyPickerSelectedIndexChanged;
             CompanyNamePicker.SelectedIndexChanged += this.MyPickerSelectedIndexChanged;
         }
@@ -61,6 +60,7 @@ namespace Jobs247.Views
         {
             ChangeMatchingJobsLabel();
         }
+
         private void MyPickerSelectedIndexChanged(object sender, EventArgs e)
         {
             ChangeMatchingJobsLabel();
@@ -70,6 +70,7 @@ namespace Jobs247.Views
         {
             MatchingJobs.Clear();
             string MatchingJobsFoundCount = JobList.Count().ToString();
+
             if (JobTitlePicker.SelectedIndex == -1 && CompanyNamePicker.SelectedIndex != -1)
             {
                 foreach(var item in JobList)
@@ -103,6 +104,7 @@ namespace Jobs247.Views
                 }
                 MatchingJobsFoundCount = MatchingJobs.Count().ToString();
             }
+
             if (SearchBar.Text != null)
             {
                 if(CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex == -1)
@@ -138,6 +140,7 @@ namespace Jobs247.Views
                     MatchingJobs.Add(item);
                 }
             }
+
             if (MatchingJobsFoundCount != "0")
             {
                 MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
@@ -148,11 +151,7 @@ namespace Jobs247.Views
             {
                 MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
                 ShowMatchesButton.IsVisible = false;
-            }
-
-            
-        }
-
-        
+            } 
+        }   
     }
 }

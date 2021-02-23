@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -27,6 +26,7 @@ namespace Jobs247.Utility
             List<JobPosting> jobItems = null;
             Uri uri = new Uri(Constants.Url + addToUrl);
             HttpResponseMessage response = await client.GetAsync(uri);
+
             if (response.IsSuccessStatusCode)
             {
                 content = await response.Content.ReadAsStringAsync();
@@ -53,7 +53,6 @@ namespace Jobs247.Utility
                 positionItems = JsonConvert.DeserializeObject<List<Position>>(content);
             }
 
-
             if(jobItems != null && companyItems != null && positionItems != null)
             {
                 foreach (var item in jobItems)
@@ -67,13 +66,8 @@ namespace Jobs247.Utility
                     });
                 }
             }
-            
 
             return Jobs;
         }
-
-
-
-
     }
 }

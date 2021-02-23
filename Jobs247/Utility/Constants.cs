@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
-namespace Jobs247
+namespace Jobs247.Utility
 {
     public static class Constants
     {
