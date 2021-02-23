@@ -9,19 +9,25 @@ namespace Jobs247.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShowMatchesPage : ContentPage
     {
-        public ObservableCollection<Job> MatchingJobsListViewItems { get; set; }
-
         public ShowMatchesPage(List<Job> MatchingJobs)
         {
             InitializeComponent();
 
-            MatchingJobsListViewItems = new ObservableCollection<Job>(MatchingJobs);
-            MatchingJobsListView.ItemsSource = MatchingJobsListViewItems;
+            MatchingJobsListView.ItemsSource = new ObservableCollection<Job>(MatchingJobs);
+        }
+
+        protected override void OnAppearing()
+        {
+            MatchingJobsListView.SelectedItem = null;
         }
 
         private async void OnMatchingJobsItemClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushAsync(new SpecificJobPage(e.SelectedItem as Job));
+            if (MatchingJobsListView.SelectedItem != null)
+            {
+                await Navigation.PushAsync(new SpecificJobPage(e.SelectedItem as Job));
+            }
+            
         }
     }
 }

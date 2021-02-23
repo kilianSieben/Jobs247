@@ -28,14 +28,13 @@ namespace Jobs247.Views
             JobList = new List<Job>();
             MatchingJobs = new List<Job>();
             RestService = new RestService();
- 
-            JobTitlePicker.SelectedIndexChanged += this.MyPickerSelectedIndexChanged;
-            CompanyNamePicker.SelectedIndexChanged += this.MyPickerSelectedIndexChanged;
         }
 
         protected async override void OnAppearing()
         {
             JobList.Clear();
+            JobTitleList.Clear();
+            CompanyNameList.Clear();
             JobList = await RestService.GetJobPostings();
             foreach(var item in JobList)
             {
@@ -49,19 +48,12 @@ namespace Jobs247.Views
 
             ChangeMatchingJobsLabel();
         }
-
-
-        private async void OnShowMatchesClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ShowMatchesPage(MatchingJobs));
-        }
-
-        private void SearchBarTextChanged(object sender, EventArgs e)
+        private void MyPickerSelectedIndexChanged(object sender, EventArgs e)
         {
             ChangeMatchingJobsLabel();
         }
 
-        private void MyPickerSelectedIndexChanged(object sender, EventArgs e)
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeMatchingJobsLabel();
         }
@@ -69,89 +61,45 @@ namespace Jobs247.Views
         private void ChangeMatchingJobsLabel()
         {
             MatchingJobs.Clear();
-            string MatchingJobsFoundCount = JobList.Count().ToString();
 
-            if (JobTitlePicker.SelectedIndex == -1 && CompanyNamePicker.SelectedIndex != -1)
+            foreach(var item in JobList)
             {
-                foreach(var item in JobList)
-                {
-                    if (CompanyNameList[CompanyNamePicker.SelectedIndex] == item.Company.name)
-                    {
-                        MatchingJobs.Add(item);
-                    }
-                }
-                MatchingJobsFoundCount = MatchingJobs.Count().ToString();
-            }
-            else if (CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex != -1)
-            {
-                foreach (var item in JobList)
-                {
-                    if (JobTitleList[JobTitlePicker.SelectedIndex] == item.Position.name)
-                    {
-                        MatchingJobs.Add(item);
-                    }
-                }
-                MatchingJobsFoundCount = MatchingJobs.Count().ToString();
-            }
-            else if (CompanyNamePicker.SelectedIndex != -1 && JobTitlePicker.SelectedIndex != -1)
-            {
-                foreach (var item in JobList)
-                {
-                    if (CompanyNameList[CompanyNamePicker.SelectedIndex] == item.Company.name && JobTitleList[JobTitlePicker.SelectedIndex] == item.Position.name)
-                    {
-                        MatchingJobs.Add(item);
-                    }
-                }
-                MatchingJobsFoundCount = MatchingJobs.Count().ToString();
+                MatchingJobs.Add(item);
             }
 
-            if (SearchBar.Text != null)
+            if (JobTitlePicker.SelectedIndex != -1)
             {
-                if(CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex == -1)
-                {
-                    foreach (var item in JobList)
-                    {
-                        if (item.Company.name.Contains(SearchBar.Text)) MatchingJobs.Add(item);
-                        else if (item.Position.name.Contains(SearchBar.Text)) MatchingJobs.Add(item);
-                        else if (item.Description.Contains(SearchBar.Text)) MatchingJobs.Add(item);
-                    }
-                    MatchingJobsFoundCount = MatchingJobs.Count().ToString();
-                }
-                else
-                {
-                    var tempMatchingJobs = new ObservableCollection<Job>(MatchingJobs);
-                    foreach (var item in tempMatchingJobs)
-                    {
-                        if (item.Company.name.Contains(SearchBar.Text) == false && 
-                            item.Position.name.Contains(SearchBar.Text) == false && 
-                            item.Description.Contains(SearchBar.Text) == false)
-                        {
-                            MatchingJobs.Remove(item);
-                        }
-                    }
-                    MatchingJobsFoundCount = MatchingJobs.Count().ToString();
-                }
-                
-            }
-            else if (SearchBar.Text == null && CompanyNamePicker.SelectedIndex == -1 && JobTitlePicker.SelectedIndex == -1)
-            {
-                foreach(var item in JobList)
-                {
-                    MatchingJobs.Add(item);
-                }
+                MatchingJobs = MatchingJobs.Where(x => x.Position.name == JobTitleList[JobTitlePicker.SelectedIndex]).ToList();
             }
 
-            if (MatchingJobsFoundCount != "0")
+            if (CompanyNamePicker.SelectedIndex != -1)
             {
-                MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
+                MatchingJobs = MatchingJobs.Where(x => x.Company.name == CompanyNameList[CompanyNamePicker.SelectedIndex]).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(SearchBar.Text))
+            {
+                MatchingJobs = MatchingJobs.Where(x => x.SearchAllText().Contains(SearchBar.Text.ToLower())).ToList();
+            }
+
+            if (MatchingJobs.Count() > 0)
+            {
                 ShowMatchesButton.IsVisible = true;
-
             }
             else
             {
-                MatchingJobsFound.Text = $"We've found {MatchingJobsFoundCount} matching Jobs for you";
                 ShowMatchesButton.IsVisible = false;
-            } 
-        }   
+            }
+
+            PageStackLayout.IsVisible = true;
+            MatchingJobsFound.Text = $"We've found {MatchingJobs.Count().ToString()} matching Jobs for you";
+        }
+
+        private async void OnShowMatchesClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ShowMatchesPage(MatchingJobs));
+        }
+
+        
     }
 }

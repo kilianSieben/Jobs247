@@ -5,7 +5,7 @@
              x:Class="Jobs247.Views.JobFilterPage"
              Title="{x:Static local:Constants.HeaderTitle}">
     <ContentPage.Content>
-        <StackLayout Padding="20,20,20,50">
+        <StackLayout x:Name="PageStackLayout" Padding="20,20,20,50" IsVisible="false">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
@@ -13,9 +13,9 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <StackLayout Grid.Column="1">
-                    <Picker x:Name="JobTitlePicker" Title="Job-Title" Style="{StaticResource pickerFilterStyle}"/>
-                    <Picker x:Name="CompanyNamePicker" Title="Company" Style="{StaticResource pickerFilterStyle}"/>
-                    <SearchBar x:Name="SearchBar" Placeholder="Free Text Search" SearchButtonPressed="SearchBarTextChanged"/>
+                    <Picker x:Name="JobTitlePicker" Title="Job-Title" Style="{StaticResource pickerFilterStyle}" SelectedIndexChanged="MyPickerSelectedIndexChanged"/>
+                    <Picker x:Name="CompanyNamePicker" Title="Company" Style="{StaticResource pickerFilterStyle}" SelectedIndexChanged="MyPickerSelectedIndexChanged"/>
+                    <SearchBar x:Name="SearchBar" Placeholder="Free Text Search" TextChanged="OnTextChanged"/>
                     <Label x:Name="MatchingJobsFound" Margin="0,30,0,0"/>
                 </StackLayout>
             </Grid>
