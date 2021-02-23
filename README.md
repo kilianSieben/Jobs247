@@ -4,5 +4,5 @@ Die App kann nur mit einem Emulator vollständig benutzt werden, da der locale S
 
 Durch das verwenden von **10.0.2.2** statt **localhost** im Code, war es möglich mit dem Emulator die Daten vom Server zu erhalten.
 
-Das Programm wurde nur mit dem Andriod Emulator getestet, da keine Mac-Umgebung vorhanden ist. 
+Das Programm wurde nur mit dem Android Emulator getestet, da keine Mac-Umgebung vorhanden ist. 
 
