@@ -2,7 +2,6 @@
 using Jobs247.Utility;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -36,11 +35,20 @@ namespace Jobs247.Views
             JobTitleList.Clear();
             CompanyNameList.Clear();
             JobList = await RestService.GetJobPostings();
+
+            //If the server is not running or no job postings were found, this message will be shown on screen
+            if (JobList.Count == 0)
+            {
+                await DisplayAlert("Exception", "No jobs were found", "OK");
+            }
+
+            //Adding all unique job titles and company names to the picker.
             foreach(var item in JobList)
             {
                 JobTitleList.Add(item.Position.name);
                 CompanyNameList.Add(item.Company.name);
             }
+
             JobTitleList = JobTitleList.Distinct().ToList();
             CompanyNameList = CompanyNameList.Distinct().ToList();
             JobTitlePicker.ItemsSource = JobTitleList;
@@ -67,6 +75,7 @@ namespace Jobs247.Views
                 MatchingJobs.Add(item);
             }
 
+            //Searching the job list for matching jobs with the used filters
             if (JobTitlePicker.SelectedIndex != -1)
             {
                 MatchingJobs = MatchingJobs.Where(x => x.Position.name == JobTitleList[JobTitlePicker.SelectedIndex]).ToList();
@@ -92,7 +101,7 @@ namespace Jobs247.Views
             }
 
             PageStackLayout.IsVisible = true;
-            MatchingJobsFound.Text = $"We've found {MatchingJobs.Count().ToString()} matching Jobs for you";
+            MatchingJobsFound.Text = $"We've found {MatchingJobs.Count()} matching Jobs for you";
         }
 
         private async void OnShowMatchesClicked(object sender, EventArgs e)

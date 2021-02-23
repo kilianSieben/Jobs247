@@ -18,6 +18,7 @@ namespace Jobs247.Views
 
         protected override void OnAppearing()
         {
+            //Unselecting the SelectedItem when return from the next page
             MatchingJobsListView.SelectedItem = null;
         }
 
